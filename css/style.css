@@ -1,0 +1,12 @@
+ol { 
+   
+    counter-reset: item;
+    list-style-type: none;
+}
+.topo{
+    background-color: DimGray;
+    text-align: center;
+}
+.baixo{
+     background-color:Gainsboro ;
+}
