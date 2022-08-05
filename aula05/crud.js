@@ -7,16 +7,27 @@ let update = null
 $('form').on('submit', function (event) {
     event.preventDefault();
     let dados = obterDados()
+    console.log('recebi', dados);
+    console.log('pessoas antes', pessoas)
     if ($('#add').is(':visible')) {
         pessoas.push(dados)
-        console.log(pessoas)
+
         console.log('added');
-        escreverTabela()
 
     } else {
+        pessoas[pessoas.indexOf(update)] = dados
+
         console.log('updated');
     }
+    console.log('pessoas depois', pessoas)
+    escreverTabela()
+    $('#clean').click()
 });
+
+$('#clean').on('click', function () {
+    $('#add').show()
+    $('#updated').hide()
+})
 
 function obterDados() {
     let nome = $('#nome').val()
@@ -39,7 +50,7 @@ function escreverTabela() {
                 $('<td>', { text: pessoa.cidade }),
                 $('<td>').append(
                     $('<button>', {
-                        class: 'btn btn-primary',
+                        class: 'btn btn-primary me-2',
                         text: 'Editar',
                         click: function () {
                             update = pessoa
@@ -49,11 +60,21 @@ function escreverTabela() {
                             $('#add').hide()
                             $('#update').show()
                         }
+                    }),
+                    $("<button>", {
+                        class: "btn btn-danger me-2",
+                        text: "Delete",
+                        click: function () {
+                            pessoas.splice(pessoas.indexOf(pessoa), 1)
+                            escreverTabela()
+                        }
+
                     })
                 )
-            ),
-
+            )
         )
 
-    });
+        
+
+});
 }
